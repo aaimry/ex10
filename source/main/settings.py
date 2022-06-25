@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'webapp',
     'accounts',
     'phonenumber_field',
-    'crispy_forms'
+    'crispy_forms',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +121,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 LOGOUT_REDIRECT_URL = "webapp:advertisement_list"
 LOGIN_REDIRECT_URL = "webapp:advertisement_list"
 
@@ -140,3 +140,6 @@ AUTH_USER_MODEL = 'accounts.MyUser'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR.joinpath('uploads')
+MEDIA_URL = 'media/'
