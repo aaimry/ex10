@@ -5,28 +5,16 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from webapp.choice import StatusChoices
+from webapp.choice import StatusChoices, CategoryChoices
 
 User = get_user_model()
-
-
-class Category(models.Model):
-    title = models.CharField(max_length=100, blank=False, null=False, verbose_name=_('Категория'))
-
-    def __str__(self):
-        return {self.title}
-
-    class Meta:
-        db_table = 'category'
-        verbose_name = _('Категория')
-        verbose_name_plural = _('Категории')
 
 
 class Advertisement(models.Model):
     title = models.CharField(max_length=200, blank=False, null=False, verbose_name=_('Заголовок'))
     description = models.TextField(max_length=2000, null=False, blank=False, verbose_name=_('Описание'))
-    category = models.ForeignKey('webapp.Category', on_delete=models.CASCADE, related_name='advertisement_category',
-                                 verbose_name=_('Категория'))
+    category = models.CharField(max_length=50, null=False, blank=False, choices=CategoryChoices.choices,
+                                default='auto', verbose_name=_('Категория'))
     status = models.CharField(max_length=30, null=False, blank=False, choices=StatusChoices.choices,
                               default='to_moderate', verbose_name=_('Cтатус'))
     picture = models.ImageField(upload_to='pictures/', verbose_name=_('Фото'))
@@ -58,7 +46,6 @@ class Advertisement(models.Model):
     def adv_delete(self):
         self.is_active = False
         self.save()
-
 
     def get_absolute_url(self):
         return reverse('webapp:advertisement', kwargs={'pk': self.pk})

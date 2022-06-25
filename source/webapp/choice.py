@@ -8,3 +8,8 @@ class StatusChoices(TextChoices):
     REJECTED = 'rejected', _('Отклонено')
 
 
+class CategoryChoices(TextChoices):
+    AUTO = 'auto', _('Автомобили')
+    SERVICE = 'service', _('Услуги')
+    SPORT = 'sport', _('Спорт')
+    EDUCATION = 'education', _('Образование')
