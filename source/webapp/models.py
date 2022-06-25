@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from webapp.choice import StatusChoices
@@ -46,8 +47,18 @@ class Advertisement(models.Model):
 
     def update_time(self):
         self.updated_at = datetime.datetime.now()
+        self.status = 'to_moderate'
         self.save()
 
     def published_time(self):
         self.published_at = datetime.datetime.now()
+        self.status = 'published'
         self.save()
+
+    def adv_delete(self):
+        self.is_active = False
+        self.save()
+
+
+    def get_absolute_url(self):
+        return reverse('webapp:advertisement', kwargs={'pk': self.pk})

@@ -17,7 +17,7 @@ class RegistrationView(CreateView):
         if not next_url:
             next_url = self.request.POST.get('next')
         if not next_url:
-            next_url = reverse('')
+            next_url = reverse('webapp:advertisement_list')
         return next_url
 
 
