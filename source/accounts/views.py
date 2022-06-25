@@ -40,34 +40,4 @@ class UserUpdateView(UpdateView):
 class Profile(DetailView):
     model = MyUser
     template_name = 'accounts/profile.html'
-    context_object_name = 'user_object'
-    paginate_by = 9
-    paginate_orphans = 0
-
-    def get(self, request, **kwargs):
-        self.form = SearchForm(request.GET)
-        self.search_data = self.get_search_data()
-        return super(Profile, self).get(request, **kwargs)
-
-    def get_search_data(self):
-        if self.form.is_valid():
-            return self.form.cleaned_data['search_value']
-        return None
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = self.get_object()
-        queryset = Advertisement.objects.all()
-        if self.search_data:
-            queryset = Advertisement.objects.filter(
-                Q(title__icontains=self.search_data) |
-                Q(description__icontains=self.search_data)
-            )
-        if self.request.user == user:
-            context['advertisement'] = queryset.filter(Q(is_active=True) & Q(author=user))
-        else:
-            context['advertisement'] = queryset.filter(Q(author=user) & Q(status='published') & Q(is_active=True))
-        context['search_form'] = self.form
-        if self.search_data:
-            context['query'] = urlencode({'search_value': self.search_data})
-        return context
+    context_object_name = "author"

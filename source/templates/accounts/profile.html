@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container mt-3">
+        <h5>Никнейм:{{ user_object.username }}</h5>
+        <h5>Имя: {{ user_object.first_name }} {{ user_object.last_name }}</h5>
+        <h5>Телефон: {{ user_object.phone }}</h5>
+        {% if request.user == user_object %}
+            <form action="{% url "accounts:update_user" user_object.pk %}" method="get">
+                <button class="btn btn-dark btn-sm">Редактировать Профиль</button>
+            </form>
+        {% endif %}
+{% endblock content %}

@@ -1,33 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block nav %}
-    {% if user.is_authenticated and  is_author %}
-        <li class="nav-item">
-            <a class="nav-link text-light" href="{% url "webapp:advertisement_update" advertisement.id %}">Изменить</a>
-        </li>
-    {% endif %}
-    {% if user.is_authenticated and is_author %}
-        <li class="nav-item">
-            <a class="nav-link text-light" href="{% url "webapp:advertisement_delete" advertisement.id %}">Удалить</a>
-        </li>
-    {% endif %}
-{% endblock nav %}
+
 {% block content %}
     <div class="card m-3 p-3">
         <div class="row">
+            {% if request.user == advertisement.author %}
+                <div class="mb-3">
+                    <form action="{% url "webapp:advertisement_update" advertisement.pk %}" method="get">
+                        <button class="btn btn-primary btn-sm">Редактировать</button>
+                    </form>
+                </div>
+                <div class="mb-3">
+                    <form action="{% url "webapp:advertisement_delete" advertisement.pk %}" method="get">
+                        <button class="btn btn-dark btn-sm">Удалить</button>
+                    </form>
+                </div>
+            {% endif %}
             <h3>{{ advertisement.title }}</h3>
             <h3>{{ advertisement.description }}</h3>
             <span>Автор:</span><a
                 href="{% url 'accounts:profile' advertisement.author.id %}">{{ advertisement.author }}</a>
             <h3>{{ advertisement.author.phone }}</h3>
             <p class="card-text"><small class="text-muted">{{ advertisement.published_at }}</small></p>
-            {% if advertisement.picture %}
-                <img class='rounded img' style="height: 550px; width: 850px" src="{{ advertisement.picture.url }}">
-            {% else %}
-                <img class='rounded img' style="height: 150px; width: 200px;"
-                     src="{% static 'img/no_img.jpg' %}"
-                     alt="no photo">
-            {% endif %}
+            <img src="{{ advertisement.picture.url }}" class="card-img-top" alt="..."
+                 style="height: 300px; width: 300px">
+
         </div>
     </div>
 {% endblock content %}

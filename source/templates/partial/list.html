@@ -4,11 +4,11 @@
         {% for ad in advertisement %}
             <div class="card m-3 p-3" style="width: 25rem;">
                 <div class="card-body text-center">
-                    <img src="{{ advertisement.picture.url }}" class="card-img-top" alt="...">
+                    <img src="{{ ad.picture.url }}" class="card-img-top" alt="...">
                     <h5>Категория: {{ ad.category }}| {{ ad.title }}</h5>
                     <h5>{{ ad.description }}</h5>
                     <h5>
-                        <a style="text-decoration: none" href="{% url 'accounts:profile' ad.author.id %}"> ad.author</a>
+                        <a style="text-decoration: none" href="{% url 'accounts:profile' ad.author.id %}"> {{ad.author.username}}</a>
                     </h5>
                     <h5>Телефон: {{ ad.author.phone }}</h5>
                     <h5>Цена: {{ ad.price }} cом</h5>

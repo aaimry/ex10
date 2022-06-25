@@ -38,4 +38,9 @@
             {% endfor %}
         </div>
     </div>
+    <div class="m-3">
+        {% if is_paginated %}
+            {% include 'partial/pagination.html' %}
+        {% endif %}
+    </div>
 {% endblock %}
