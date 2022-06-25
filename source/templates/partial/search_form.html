@@ -1,0 +1,7 @@
+<form class="text-center mb-5" action="" method="GET">
+    {{ search_form.search_value }}
+    <input type="submit" value="Найти">
+    {% for error in search_form.search_value.errors %}
+        <p class="form-error">{{ error }}</p>
+    {% endfor %}
+</form>
