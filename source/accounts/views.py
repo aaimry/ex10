@@ -40,4 +40,4 @@ class UserUpdateView(UpdateView):
 class Profile(DetailView):
     model = MyUser
     template_name = 'accounts/profile.html'
-    context_object_name = "author"
+    context_object_name = "user_object"
