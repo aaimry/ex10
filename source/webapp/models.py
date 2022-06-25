@@ -19,10 +19,10 @@ class Advertisement(models.Model):
                               default='to_moderate', verbose_name=_('Cтатус'))
     picture = models.ImageField(upload_to='pictures/', verbose_name=_('Фото'))
     price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('Цена'))
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author', verbose_name=_('Автор'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
-    updated_at = models.DateTimeField(null=True, verbose_name=_('Дата обновления'))
-    published_at = models.DateTimeField(null=True, verbose_name=_('Дата публикации'))
+    updated_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата обновления'))
+    published_at = models.DateTimeField(auto_now=True, verbose_name=_('Дата публикации'))
     is_active = models.BooleanField(default=True)
 
     def __str__(self):

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block nav %}
+    {% if user.is_authenticated and  is_author %}
+        <li class="nav-item">
+            <a class="nav-link text-light" href="{% url "webapp:advertisement_update" advertisement.id %}">Изменить</a>
+        </li>
+    {% endif %}
+    {% if user.is_authenticated and is_author %}
+        <li class="nav-item">
+            <a class="nav-link text-light" href="{% url "webapp:advertisement_delete" advertisement.id %}">Удалить</a>
+        </li>
+    {% endif %}
+{% endblock nav %}
+{% block content %}
+    <div class="card m-3 p-3">
+        <div class="row">
+            <h3>{{ advertisement.title }}</h3>
+            <h3>{{ advertisement.description }}</h3>
+            <span>Автор:</span><a
+                href="{% url 'accounts:profile' advertisement.author.id %}">{{ advertisement.author }}</a>
+            <h3>{{ advertisement.author.phone }}</h3>
+            <p class="card-text"><small class="text-muted">{{ advertisement.published_at }}</small></p>
+            {% if advertisement.picture %}
+                <img class='rounded img' style="height: 550px; width: 850px" src="{{ advertisement.picture.url }}">
+            {% else %}
+                <img class='rounded img' style="height: 150px; width: 200px;"
+                     src="{% static 'img/no_img.jpg' %}"
+                     alt="no photo">
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

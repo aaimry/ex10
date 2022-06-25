@@ -40,7 +40,10 @@
                             <a class="nav-link text-light fs-5" aria-current="page"
                                href="{% url 'accounts:logout' %}">{{ user.username }} | Выйти</a>
                         </li>
-
+                        <li>
+                            <a style="text-decoration: none" href="{% url 'webapp:advertisement_create' %}">Создать
+                                объявление </a>
+                        </li>
                     {% endif %}
                 {% endblock %}
             </ul>

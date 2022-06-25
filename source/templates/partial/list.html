@@ -1,0 +1,31 @@
+{% load static %}
+<div class="container">
+    <div class="row justify-content-between">
+        {% for ad in advertisement %}
+            <div class="card m-3 p-3" style="width: 25rem;">
+                <div class="card-body text-center">
+                    {% if ad.picture %}
+                        <img class='rounded img' style="height: 150px; width: 200px;" src="{{ ad.picture.url }}"
+                             alt="...">
+                    {% else %}
+                        <img class='rounded img' style="height: 150px; width: 200px;"
+                             src="{% static 'img/no_img.jpg' %}"
+                             alt="no photo">
+                    {% endif %}
+                    <h5>Категория: {{ ad.category }}| {{ ad.title }}</h5>
+                    <h5>{{ ad.description }}</h5>
+                    <h5>
+                        <a style="text-decoration: none" href="{% url 'accounts:profile' ad.author.id %}"> ad.author</a>
+                    </h5>
+                    <h5>Телефон: {{ ad.author.phone }}</h5>
+                    <h5>Цена: {{ ad.price }} cом</h5>
+                    <p class="card-text"><small class="text-muted">Опубликовано: {{ ad.published_at }}</small></p>
+                    <hr>
+                    <a href="{% url "webapp:advertisement_detail" ad.id %}" type="button"
+                       class="btn btn-outline-primary">
+                        Детальный просмотр</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -12,7 +12,7 @@ class AdvertisementCreateForm(forms.ModelForm):
 class AdvertisementApproveForm(forms.ModelForm):
     class Meta:
         model = Advertisement
-        fields = ('status', 'published_at')
+        fields = ('status',)
 
 
 class AdvertisementUpdateForm(forms.ModelForm):
