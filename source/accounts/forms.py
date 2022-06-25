@@ -13,6 +13,7 @@ class UserRegistrationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = MyUser
         fields = (
+            "username",
             "first_name",
             "last_name",
             "password1",
