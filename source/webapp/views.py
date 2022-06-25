@@ -78,7 +78,7 @@ class AdvertisementUpdateView(PermissionRequiredMixin, UpdateView):
         advertisement = form.save(commit=False)
         advertisement.update_time()
         advertisement.save()
-        return redirect(self.success_url)
+        return redirect('webapp:advertisement_list')
 
     def has_permission(self):
         return self.get_object().author == self.request.user
