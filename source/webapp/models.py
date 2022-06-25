@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -30,7 +32,7 @@ class Advertisement(models.Model):
     price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('Цена'))
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
-    updated_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата обновления'))
+    updated_at = models.DateTimeField(null=True, verbose_name=_('Дата обновления'))
     published_at = models.DateTimeField(null=True, verbose_name=_('Дата публикации'))
     is_active = models.BooleanField(default=True)
 
@@ -41,3 +43,11 @@ class Advertisement(models.Model):
         db_table = 'advertisement'
         verbose_name = _('Объявление')
         verbose_name_plural = _('Объявления')
+
+    def update_time(self):
+        self.updated_at = datetime.datetime.now()
+        self.save()
+
+    def published_time(self):
+        self.published_at = datetime.datetime.now()
+        self.save()
