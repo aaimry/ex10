@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %} Registration {% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <h1>Регистрация</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% include 'partial/form.html' with button_text='Зарегистрироватьcя' %}
+        </form>
+    </div>
+{% endblock %}
