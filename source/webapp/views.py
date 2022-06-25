@@ -101,3 +101,57 @@ class AdvertisementDeleteView(PermissionRequiredMixin, DeleteView):
 
     def has_permission(self):
         return self.get_object().author == self.request.user
+
+
+class AdvertisementToModerateView(PermissionRequiredMixin, ListView):
+    model = Advertisement
+    template_name = 'moderator/list.html'
+    ordering = ('-created_at')
+    paginate_by = 10
+    paginate_orphans = 0
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(status="to_moderate").exclude(is_active=False)
+        if self.search_data:
+            queryset = queryset.filter(
+                Q(title__icontains=self.search_data) |
+                Q(description__icontains=self.search_data)
+            )
+        return queryset
+
+    def get_search_data(self):
+        if self.form.is_valid():
+            return self.form.cleaned_data['search_value']
+        return None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_form'] = self.form
+        if self.search_data:
+            context['query'] = urlencode({'search_value': self.search_data})
+            return context
+        context['advertisement_list'] = self.get_queryset()
+        return context
+
+    def get(self, request, **kwargs):
+        self.form = SearchForm(request.GET)
+        self.search_data = self.get_search_data()
+        return super(AdvertisementToModerateView, self).get(request, **kwargs)
+
+    def has_permission(self):
+        return self.request.user.is_staff
+
+
+class AdvertisementApproveView(PermissionRequiredMixin, DetailView):
+    model = Advertisement
+    template_name = 'moderator/advertisement_approve.html'
+    context_object_name = 'advertisement'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(status='to_moderate').exclude(is_active=False)
+        return queryset
+
+    def has_permission(self):
+        return self.request.user.is_staff

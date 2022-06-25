@@ -4,14 +4,7 @@
         {% for ad in advertisement %}
             <div class="card m-3 p-3" style="width: 25rem;">
                 <div class="card-body text-center">
-                    {% if ad.picture %}
-                        <img class='rounded img' style="height: 150px; width: 200px;" src="{{ ad.picture.url }}"
-                             alt="...">
-                    {% else %}
-                        <img class='rounded img' style="height: 150px; width: 200px;"
-                             src="{% static 'img/no_img.jpg' %}"
-                             alt="no photo">
-                    {% endif %}
+                    <img src="{{ advertisement.picture.url }}" class="card-img-top" alt="...">
                     <h5>Категория: {{ ad.category }}| {{ ad.title }}</h5>
                     <h5>{{ ad.description }}</h5>
                     <h5>
