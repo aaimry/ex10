@@ -14,7 +14,7 @@ class AdvertisementListView(ListView):
     model = Advertisement
     context_object_name = 'advertisement'
     ordering = ('-created_at')
-    paginate_by = 10
+    paginate_by = 1
     paginate_orphans = 0
 
     def get(self, request, **kwargs):
@@ -107,7 +107,7 @@ class AdvertisementToModerateView(PermissionRequiredMixin, ListView):
     model = Advertisement
     template_name = 'moderator/list.html'
     ordering = ('-created_at')
-    paginate_by = 10
+    paginate_by = 2
     paginate_orphans = 0
 
     def get_queryset(self):

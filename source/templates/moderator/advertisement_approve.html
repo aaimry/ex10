@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ advertisement.picture.url }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ advertisement.title }}</h5>
+                    <p class="card-text">{{ advertisement.description }}</p>
+                    {% if advertisement.price %}
+                        <p class="h6">Цена: {{ advertisement.price }}</p>
+                    {% endif %}
+                    <a style="text-decoration: none; color:#424242"
+                       href="{% url "accounts:profile" advertisement.author.pk %}">
+                        Автор:<b> {{ advertisement.author }}</b>
+                    </a>
+                    <p class="card-text"><small class="text-muted">{{ advertisement.published_at }}</small></p>
+                </div>
+                <div style="display: flex; flex-direction: row">
+                    <button data-pk="{{ advertisement.pk }}" onclick="accept(event)"
+                            style="margin: 5px" class="btn btn-success">Принять
+                    </button>
+                    <button data-pk="{{ advertisement.pk }}" onclick="reject(event)"
+                            style="margin: 5px" class="btn btn-danger">Отклонить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

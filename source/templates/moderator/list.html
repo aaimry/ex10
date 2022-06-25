@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="m-3">
+        {% include 'partial/search_form.html' %}
+    </div>
+    <h1 class="text-center">Объявление на модерацию</h1>
+    <div class="d-flex">
+        <div class="row">
+            {% for advertisement in advertisement_list %}
+                <div id="moderator_block{{ advertisement.pk }}" class="col-xs-4" style="width: auto">
+                    <div class="card col" style="width: 18rem;">
+                        <img src="{{ advertisement.picture.url }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <a style="text-decoration: none; color:#424242;"
+                               href="{% url "webapp:advertisement-approve-detail" advertisement.pk %}">
+                                <h4>{{ advertisement.title }}</h4>
+                            </a>
+                            <p><span>Описание:</span> {{ advertisement.title }}</p>
+                            {% if advertisement.price != 0 %}
+                                <p><span>Цена:</span> {{ advertisement.price }}</p>
+                            {% endif %}
+                            <p><span>Категория:</span> {{ advertisement.category }}</p>
+                            <a style="text-decoration: none; color:#424242"
+                               href="{% url "accounts:profile" advertisement.author.pk %}">
+                                Автор:<b> {{ advertisement.author }}</b>
+                            </a>
+                            <div style="display: flex; flex-direction: row">
+                                <button data-pk="{{ advertisement.pk }}" onclick="accept(event)"
+                                        style="margin: 5px" class="btn btn-success">Принять
+                                </button>
+                                <button data-pk="{{ advertisement.pk }}" onclick="reject(event)"
+                                        style="margin: 5px" class="btn btn-danger">Отклонить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
